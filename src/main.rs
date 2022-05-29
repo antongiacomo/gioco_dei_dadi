@@ -1,30 +1,26 @@
 use rand::{thread_rng, Rng};
-use core::fmt;
-use std::{thread, time::Duration};
+
+
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct Dado {
-    size: u32,
-}
+pub struct Dado(u32);
 impl Dado {
-    pub fn new(size: u32) -> Dado {
+    pub fn new(&self,size: u32) -> Dado {
         assert!(size != 0, "`size is zero");
-        return Dado { size: size };
+        return Dado(self.0);
     }
     pub fn lancia(&self) -> u32 {
         let mut rng = thread_rng();
-        return rng.gen_range(1..=self.size);
+        return rng.gen_range(1..=self.0);
     }
 
 }
 
-pub struct Lanciatore {
-    val: Vec<u32>,
-}
+pub struct Lanciatore(Vec<u32>);
 impl Lanciatore {
     pub fn lancia(&self) -> (u32, Vec<u32>) {
         let mut x: Vec<u32> = [].to_vec();
-        for size in self.val.iter() {
-            x.push(Dado { size: *size }.lancia());
+        for size in self.0.iter() {
+            x.push(Dado(*size).lancia());
         }
 
         let punteggio = self.calcola_punteggio(x.clone());
@@ -35,11 +31,6 @@ impl Lanciatore {
     pub fn calcola_punteggio(&self, mut x: Vec<u32>) -> u32 {
         x.sort();
 
-        //     for r in x.iter(){
-        //         print!("{}",r);
-
-        //    }
-        //    println!();
         if x == [1, 2, 3].to_vec() {
             return 0;
         }
@@ -48,9 +39,7 @@ impl Lanciatore {
         }
 
         let last = match x.last() {
-            // The division was valid
             Some(x) => *x as usize,
-            // The division was invalid
             None => 0 as usize,
         };
 
@@ -69,7 +58,7 @@ impl Lanciatore {
             }
         }
 
-        // println!("max: {}", max);
+
         if max == 1 {
             return 0;
         }
@@ -80,12 +69,7 @@ impl Lanciatore {
 
 fn lanciamo() -> u32{
     let dadi = vec![6, 6, 6] ;
-    let (punteggio, risultati) = Lanciatore { val: dadi }.lancia();
-    // println!("{}", punteggio);
-    // for val in risultati.iter() {
-    //     print!("{}", val)
-    // }
-    // println!();
+    let (punteggio, _risultati) = Lanciatore(dadi).lancia();
     return punteggio
 }
 
@@ -93,7 +77,7 @@ fn main() {
     let mut pti_g1 = 0;
     let mut pti_g2 = 0 ;
 
-    for i in 1..=10000{
+    for _i in 1..=10000{
 
 
         pti_g1 += lanciamo();
