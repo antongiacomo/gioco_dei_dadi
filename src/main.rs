@@ -1,6 +1,6 @@
 mod gioco;
 
-fn lanciamo() -> u32{
+fn lanciamo() -> u32 {
     let dadi = vec![6, 6, 6] ;
     let (punteggio, _risultati) = gioco::lanciatore::Lanciatore::new(dadi).lancia();
     return punteggio
@@ -18,4 +18,12 @@ fn main() {
 
     println!("Punteggio Antongiacomo: {}", pti_g1);
     println!("Punteggio Giorgio: {}", pti_g2);
+
+    if pti_g1 > pti_g2 {
+        println!("Antongiacomo ha vinto!");
+    } else if pti_g1 < pti_g2 {
+        println!("Giorgio ha vinto!");
+    } else {
+        println!("Pareggio!");
+    }
 }
