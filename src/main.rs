@@ -28,7 +28,7 @@ fn main() {
 
         println!();
         c += 1;
-        (c < 20) | (pti_g1 != pti_g2)
+        (c < 20) | (pti_g1 == pti_g2)
     } {}
 
     // thread::sleep(Duration::from_millis(100));
